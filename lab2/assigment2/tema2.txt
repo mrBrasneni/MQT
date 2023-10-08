@@ -28,13 +28,13 @@ docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:1
 Check that messages with the same key go to the same partition. Notice, that messages may come in a different order, when they are in different partitions.
 docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:19092,kafka2:19093,kafka3:19094 --topic events2 --group 1 --property print.partition="true" --property print.offset="true" --property print.key="true" --property key.separator=","
 
-6. Create a group of 2 consumers. 
+6. Create a group of 2 consumers.  
 Now we have two consumers within one group.
 docker exec -ti kafka /usr/bin/kafka-console-consumer --bootstrap-server kafka:19092,kafka2:19093,kafka3:19094 --topic events2 --group 1 --property print.partition="true" --property print.offset="true" --property print.key="true" --property key.separator=","
 
 7. Send more data with our producer
 Check how the messages are distributed between the 2 consumers. 
-Partitions 0 and 1 will apear on one consumer, and partitions 2 and 3 will apear on the second consumer.
+Messages stored in partitions 0 and 1 will be consumed by one consumer, while those stored in partitions 2 and 3 will be consumed by the second consumer.
 
 8. Delete topic
 docker exec -ti kafka /usr/bin/kafka-topics --delete --bootstrap-server kafka:19092,kafka2:19093,kafka3:19094 --topic events1
