@@ -1,0 +1,14 @@
+//Get cluster id
+curl http://localhost:8082/v3/clusters
+
+//Create topic
+curl.exe -X POST -H "Content-Type: application/json" --data '{ \"topic_name\": \"my-topic\" }' "http://localhost:8082/v3/clusters/KZ73olrrTzi3GV454vy32g/topics"
+
+//Create consumer
+curl.exe -X POST -H "Content-Type: application/vnd.kafka.v2+json"  --data '{\"name\": \"FirstConsumer\", \"format\": \"json\", \"auto.offset.reset\": \"earliest\"}' http://localhost:8082/consumers/group
+
+//Subscribe the consumer
+curl.exe -X POST -H "Content-Type: application/vnd.kafka.v2+json"  --data '{\"topics\": [\"my-topic\"]}' http://localhost:8082/consumers/group/instances/FirstConsumer/subscription
+
+//Read the data
+curl.exe -X GET  -H "Content-Type: application/vnd.kafka.json.v2+json" -H "Accept: application/vnd.kafka.json.v2+json" "http://localhost:8082/consumers/group/instances/FirstConsumer/records"
