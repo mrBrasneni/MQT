@@ -1,0 +1,6 @@
+CREATE STREAM stream1 (id INT, name STRING) WITH (KAFKA_TOPIC='topic1', VALUE_FORMAT='AVRO');
+CREATE STREAM stream2 (id INT, description STRING) WITH (KAFKA_TOPIC='topic2', VALUE_FORMAT='AVRO');
+
+SELECT stream1.id, stream1.name, stream2.description
+FROM stream1
+LEFT JOIN stream2 ON stream1.id = stream2.id;
